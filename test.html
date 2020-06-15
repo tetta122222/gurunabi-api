@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>楽天API</title>
+  <!--<link rel="stylesheet" href="style.css">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<body>
+  <ul id="list"></ul>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</head>
+ <script>
+   $(function () {
+        // // 検索項目の設定
+        const htmlList = document.querySelector("#list");
+        // var place = 'Kagoshima';
+        // Area = 'PREF46',
+        // Code = 'id';
+        // // データを引っ張る
+        var ajax = new XMLHttpRequest();
+        ajax.open("get", "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=a6ca5ebe6caee435e9c312d71da36e3f&area=AREA140&pref=PREF46&id,");
+        ajax.responseType = 'json';
+        ajax.send();
+        ajax.onload = function (e) {
+            let array = e.target.response.rest;
+            let aaa = array.length;
+            let textcontent;
+
+            for( let i = 0; i < aaa; i++ ){
+                console.log( array[i].name   );
+                console.log( array[i].name_kana);
+                console.log( array[i].category);
+                console.log( array[i].image_url);
+
+                textcontent = '<li>' + array[i].name + '</li>' + 
+                '<li>' + array[i].name_kana + '</li>' + 
+                '<li>' + array[i].category + '</li>' + 
+                '<img src ="' + array[i].image_url.qrcode + '">' 
+                console.log(textcontent)
+                htmlList.innerHTML += textcontent;
+            };
+        };
+    });
+
+</script>
+  
+</body>
+</html>
